@@ -1,0 +1,119 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../ct-shared-styles/ct-application-theme.html">
+
+<!--
+`ct-create-staff`
+Create staff for MVT platform
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="ct-create-staff">
+  <template>
+    <style is="custom-style" >
+    :host {
+
+    }
+    </style>
+    <div class="container main-section">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="notif">
+            <span>Notification Message:</span><br/>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</span>
+            <a href="#" title="close" class="close-icon">
+              <img src="../images/close-icon.png" alt="Close" title="Close">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 box-container">
+            <h3 class="ct-header"><paper-icon-button icon="chevron-left" class="breadcrumb-icon"></paper-icon-button> Add Staff Member</h3>
+        </div>
+      </div>
+      <form is="iron-form" class="" action="/form/handler" method="post">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                  <paper-input class="ct-label ct-bordered" autocapitalize label="First Name" type="text" name="First Name" value="" required auto-validate error-message="Name Required"></paper-input>
+              </div>
+              <div class="form-group">
+                  <paper-input input="iron-input" autocapitalize="words" label="Last Name" type="text" name="Last Name" value="" required auto-validate error-message="Last Name Required"></paper-input>
+              </div>
+              <div class="form-group">
+                  <paper-input label="Email" type="text" name="Email" value="" required auto-validate error-message="Email Required"></paper-input>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                  <paper-input required label="SA ID Number / Passport Number" type="text" name="Id Number" value="{{uppercase}}" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>
+              </div>
+              <div class="form-group">
+                  <paper-input label="Mobile" type="text" preventInvalidInput name="Mobile" value="" auto-validate pattern="[0-9 +]*" char-counter error-message="Numbers only"></paper-input>
+              </div>
+              <div class="form-group">
+                <paper-dropdown-menu class="custom-dropdown" label="Role" noink no-animations>
+                  <paper-listbox class="dropdown-content" selected="1">
+                    <paper-item>Support Agent1</paper-item>
+                    <paper-item>Support Agent2</paper-item>
+                    <paper-item>Support Agent3</paper-item>
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+                <paper-button class="element-background element-color primary pull-right" raised on-tap="submitform()">Add staff member</paper-button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </template>
+  <script>
+    Polymer({
+
+      is: 'ct-create-staff',
+      properties: {
+        prop1: {
+          type: String,
+          value: 'ct-create-staff',
+        },
+        uppercase: {
+          type: String,
+          value: '',
+          observer: 'toUpper'
+        },
+        handlesumbit: {
+
+        }
+      },
+      toUpper: function(val) {
+        this.uppercase = val.toUpperCase();
+      },
+      submitform: function(e) {
+        document.getElementById('form').sumbit();
+        alert("Form submitted");
+      },
+      listeners: {
+        'tap':'sumbitform',
+        'on-tap':'submitform'
+      }
+    });
+  </script>
+</dom-module>
