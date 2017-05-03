@@ -1,18 +1,18 @@
 <link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-form/iron-form.html">
 <link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../paper-input/paper-input-behavior.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
-<link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
 <link rel="import" href="../ct-shared-styles/ct-application-theme.html">
 
 <!--
 `ct-create-staff`
-Create staff for MVT platform
+Create staff for Centular platform
 
 
 @demo demo/index.html
@@ -20,53 +20,96 @@ Create staff for MVT platform
 
 <dom-module id="ct-create-staff">
   <template>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <style is="custom-style" >
-    :host {
+      :host {
 
-    }
+      }
     </style>
+
     <div class="container main-section">
-      <!--
 
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="notif">
-            <span>Notification Message:</span><br/>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</span>
-            <a href="#" title="close" class="close-icon">
-              <img src="../images/close-icon.png" alt="Close" title="Close">
-            </a>
-          </div>
-        </div>
-      </div> -->
-
-      <form is="iron-form" class="" action="/form/handler" method="post">
+      <form is="iron-form"
+            id="form"
+            disable-native-validation-ui
+            novalidate>
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                  <paper-input class="ct-label ct-bordered" autocapitalize label="First Name" type="text" name="First Name" value="" required auto-validate error-message="Name Required"></paper-input>
+                <paper-input
+                        class="ct-label ct-bordered"
+                        label="First Name"
+                        type="text"
+                        name="firstName"
+                        value=""
+                        required
+                        auto-validate
+                        error-message="User first name is required">
+
+                </paper-input>
               </div>
               <div class="form-group">
-                  <paper-input input="iron-input" autocapitalize="words" label="Last Name" type="text" name="Last Name" value="" required auto-validate error-message="Last Name Required"></paper-input>
+                <paper-input
+                        label="Last Name"
+                        type="text"
+                        name="lastName"
+                        value=""
+                        required
+                        auto-validate
+                        error-message="User last name is required">
+
+                </paper-input>
               </div>
               <div class="form-group">
-                  <paper-input label="Email" type="text" name="Email" value="" required auto-validate error-message="Email Required"></paper-input>
+                <paper-input
+                        label="Email"
+                        type="email"
+                        name="email"
+                        value=""
+                        required
+                        auto-validate
+                        error-message="Please enter a valide email address">
+
+                </paper-input>
               </div>
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                  <paper-input required label="SA ID Number / Passport Number" type="text" name="Id Number" value="{{uppercase}}" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>
+                <paper-input
+                        required
+                        label="SA ID Number / Passport Number"
+                        type="text"
+                        name="idNumber"
+                        value=""
+                        auto-validate
+                        pattern="[a-zA-Z 0-9]*"
+                        error-message="Please enter a valid Id or passport number">
+
+                </paper-input>
               </div>
               <div class="form-group">
-                  <paper-input label="Mobile" type="text" preventInvalidInput name="Mobile" value="" auto-validate pattern="[0-9 +]*" char-counter error-message="Numbers only"></paper-input>
+                <paper-input
+                        label="Mobile"
+                        type="text"
+                        prevent-invalid-input
+                        name="mobile"
+                        value=""
+                        auto-validate
+                        allowed-pattern="[0-9 +]"
+                        char-counter
+                        required
+                        error-message="Please enter a valid mobile number">
+
+                </paper-input>
               </div>
               <div class="form-group">
-                <paper-dropdown-menu class="custom-dropdown" label="Role" noink no-animations>
-                  <paper-listbox class="dropdown-content" selected="1">
-                    <paper-item>Support Agent1</paper-item>
-                    <paper-item>Support Agent2</paper-item>
-                    <paper-item>Support Agent3</paper-item>
+                <paper-dropdown-menu class="custom-dropdown" label="Group" always-float-label noink no-animations required placeholder="Please select a user group">
+                  <paper-listbox class="dropdown-content" selected="0" attr-for-selected="value">
+                    <template is="dom-repeat" items="{{userGroups}}">
+                      <paper-item value="[[item.id]]">[[item.name]]</paper-item>
+                    </template>
                   </paper-listbox>
                 </paper-dropdown-menu>
               </div>
@@ -74,7 +117,7 @@ Create staff for MVT platform
           </div>
           <div class="row">
             <div class="col-xs-12">
-                <paper-button class="element-background element-color primary pull-right" raised on-tap="submitform()">Add staff member</paper-button>
+              <paper-button class="element-background element-color btn btn-primary pull-right" on-tap="_submitForm" raised >Add staff member</paper-button>
             </div>
           </div>
         </div>
@@ -82,34 +125,36 @@ Create staff for MVT platform
     </div>
   </template>
   <script>
-    Polymer({
+      Polymer({
 
-      is: 'ct-create-staff',
-      properties: {
-        prop1: {
-          type: String,
-          value: 'ct-create-staff',
-        },
-        uppercase: {
-          type: String,
-          value: '',
-          observer: 'toUpper'
-        },
-        handlesumbit: {
+          is: 'ct-create-staff',
 
-        }
-      },
-      toUpper: function(val) {
-        this.uppercase = val.toUpperCase();
-      },
-      submitform: function(e) {
-        document.getElementById('form').sumbit();
-        alert("Form submitted");
-      },
-      listeners: {
-        'tap':'sumbitform',
-        'on-tap':'submitform'
-      }
-    });
+          properties: {
+              userGroup: Array,
+          },
+
+          listeners: {
+              'iron-form-presubmit':'_formHandler'
+          },
+
+          _submitForm : function(){
+              this.$.form.submit();
+          },
+
+          _formHandler : function(e){
+
+              e.preventDefault();
+
+              var form = this.$.form;
+
+              if(form.validate()) {
+                  var formData = form.serialize();
+                  console.log('params', formData);
+                  this.fire('addStaff', formData);
+              }
+
+          }
+
+      });
   </script>
 </dom-module>
