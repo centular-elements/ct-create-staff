@@ -24,8 +24,40 @@ Create staff for Centular platform
 
     <style is="custom-style" >
       :host {
+        
+      --paper-input-container:{
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-bottom: none;
+            padding: 0 !important;
+            margin-bottom: 24px;
+          };
 
+          --paper-input-container-input: {
+
+            margin-left: 10px;
+          };
+
+          --paper-input-container-label: {
+            margin-left: 10px;
+          };
+        }
+      paper-dropdown-menu.custom-dropdown {
+        width: 100%;
+        --paper-input-container: {
+          border-top:1px solid #ccc;
+          border-left:1px solid #ccc;
+          border-right:1px solid #ccc;
+          border-bottom: none;
+          padding: 0;
+          margin-bottom: 8px;
+        };
+        --paper-input-container-input: {
+          padding-left: 10px;
+        };
       }
+
     </style>
 
     <div class="main-section">
