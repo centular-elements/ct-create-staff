@@ -25,11 +25,54 @@ Create staff for Centular platform
     <style is="custom-style" >
       :host {
 
+        --paper-input-container:{
+          border-top: 1px solid #ccc;
+          border-left: 1px solid #ccc;
+          border-right: 1px solid #ccc;
+          border-bottom: none;
+          padding: 0 !important;
+          margin-bottom: 24px;
+        };
+
+        --paper-input-container-input: {
+
+          margin-left: 10px;
+        };
+
+        --paper-input-container-label: {
+          margin-left: 10px;
+        };
       }
+
+      .main-section {
+        margin-top:20px;
+      }
+
+      paper-dropdown-menu.custom-dropdown {
+        width: 100%;
+        --paper-input-container: {
+          border-top:1px solid #ccc;
+          border-left:1px solid #ccc;
+          border-right:1px solid #ccc;
+          border-bottom: none;
+          padding: 0;
+          margin-bottom: 8px;
+        };
+        --paper-input-container-input: {
+          padding-left: 10px;
+        };
+      }
+
     </style>
 
-    <div class="container main-section">
-
+    <div class="main-section">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <h4>Create New Staff Member</h4>
+          </div>
+        </div>
+      </div>
       <form is="iron-form"
             id="form"
             disable-native-validation-ui
@@ -50,6 +93,8 @@ Create staff for Centular platform
 
                 </paper-input>
               </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
               <div class="form-group">
                 <paper-input
                         label="Last Name"
@@ -62,6 +107,8 @@ Create staff for Centular platform
 
                 </paper-input>
               </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
               <div class="form-group">
                 <paper-input
                         label="Email"
@@ -78,19 +125,6 @@ Create staff for Centular platform
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
                 <paper-input
-                        required
-                        label="SA ID Number / Passport Number"
-                        type="text"
-                        name="idNumber"
-                        value=""
-                        auto-validate
-                        pattern="[a-zA-Z 0-9]*"
-                        error-message="Please enter a valid Id or passport number">
-
-                </paper-input>
-              </div>
-              <div class="form-group">
-                <paper-input
                         label="Mobile"
                         type="text"
                         prevent-invalid-input
@@ -104,6 +138,8 @@ Create staff for Centular platform
 
                 </paper-input>
               </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
               <div class="form-group">
                 <paper-dropdown-menu class="custom-dropdown" label="Group" always-float-label noink no-animations required placeholder="Please select a user group">
                   <paper-listbox class="dropdown-content" selected="0" attr-for-selected="value">
