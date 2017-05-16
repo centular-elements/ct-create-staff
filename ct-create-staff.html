@@ -184,9 +184,20 @@ Create staff for Centular platform
               var form = this.$.form;
 
               if(form.validate()) {
-                  var formData = form.serialize();
-                  console.log('params', formData);
-                  this.fire('addStaff', formData);
+
+                  var formData = form.serialize(),
+                      data = {};
+
+                  data.firstName = formData.firstName;
+                  data.lastName = formData.lastName;
+                  data.contacts = [
+                      {'contact': formData.email, 'contactType' : 'email'},
+                      {'contact': formData.mobile, 'contactType' : 'mobile'}
+                  ];
+
+                  console.log('params', data);
+
+                  this.fire('addStaff', data);
               }
 
           }
