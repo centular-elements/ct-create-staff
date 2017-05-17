@@ -114,8 +114,8 @@ Create staff for Centular platform
                         label="Email"
                         type="email"
                         name="email"
-                        value=""
-                        required
+                        value="{{email}}"
+                        required$="{{_computeRequired(mobile)}}"
                         auto-validate
                         error-message="Please enter a valide email address">
 
@@ -129,11 +129,11 @@ Create staff for Centular platform
                         type="text"
                         prevent-invalid-input
                         name="mobile"
-                        value=""
+                        value="{{mobile}}"
                         auto-validate
                         allowed-pattern="[0-9 +]"
                         char-counter
-                        required
+                        required$="{{_computeRequired(email)}}"
                         error-message="Please enter a valid mobile number">
 
                 </paper-input>
@@ -141,10 +141,10 @@ Create staff for Centular platform
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                <paper-dropdown-menu class="custom-dropdown" label="Group" always-float-label noink no-animations required placeholder="Please select a user group">
-                  <paper-listbox class="dropdown-content" selected="0" attr-for-selected="value">
+                <paper-dropdown-menu class="custom-dropdown" name="group" label="Group" always-float-label noink no-animations required placeholder="Please select a user group">
+                  <paper-listbox class="dropdown-content" id="groupInput" attr-for-selected="key">
                     <template is="dom-repeat" items="{{userGroups}}">
-                      <paper-item value="[[item.id]]">[[item.name]]</paper-item>
+                      <paper-item key="[[item.id]]">[[item.name]]</paper-item>
                     </template>
                   </paper-listbox>
                 </paper-dropdown-menu>
@@ -190,14 +190,28 @@ Create staff for Centular platform
 
                   data.firstName = formData.firstName;
                   data.lastName = formData.lastName;
-                  data.contacts = [
-                      {'contact': formData.email, 'contactType' : 'email'},
-                      {'contact': formData.mobile, 'contactType' : 'mobile'}
-                  ]
+
+                  if(formData.email || formData.mobile){
+                      data.contacts = [];
+
+                      if(formData.email){
+                          data.contacts.push({'contact': formData.email, 'contactType' : 'email'});
+                      }
+
+                      if(formData.mobile){
+                          data.contacts.push({'contact': formData.mobile, 'contactType' : 'mobile'});
+                      }
+                  }
+
+                  data.group = this.$.groupInput.selected;
 
                   this.fire('addStaff', data);
               }
 
+          },
+
+          _computeRequired : function(value){
+              return !value.length;
           }
 
       });
