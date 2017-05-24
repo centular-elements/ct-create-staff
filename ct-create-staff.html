@@ -75,6 +75,7 @@ Create staff for Centular platform
       </div>
       <form is="iron-form"
             id="form"
+            method="post"
             disable-native-validation-ui
             novalidate>
         <div class="container-fluid">
@@ -117,7 +118,7 @@ Create staff for Centular platform
                         value="{{email}}"
                         required$="{{_computeRequired(mobile)}}"
                         auto-validate
-                        error-message="Please enter a valide email address">
+                        error-message="Please enter a valid email address">
 
                 </paper-input>
               </div>
@@ -133,6 +134,7 @@ Create staff for Centular platform
                         auto-validate
                         allowed-pattern="[0-9 +]"
                         char-counter
+                        maxlength="10"
                         required$="{{_computeRequired(email)}}"
                         error-message="Please enter a valid mobile number">
 
